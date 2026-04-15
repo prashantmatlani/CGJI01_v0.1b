@@ -88,6 +88,13 @@ async def chat(req: Request):
     return output
 """    
 
+# HANDLE AGENT SWITCH - FUNCTION
+def handle_agent_switch(state, agent_name):
+    # call respective agent using original query
+    return run_specific_agent(agent_name, state.initial_query)
+
+
+
 sessions = {}
 
 @app.post("/chat")
@@ -112,7 +119,16 @@ def chat(req: ChatRequest):
     
     if output["type"] == "end":
         del sessions[session_id]
-
+    
+    # HANDLE AGENT SWITCH
+    if message.startswith("__agent__:"):
+        selected_agent = message.split(":")[1]
+    
+        state.current_agent = selected_agent
+    
+        # restart flow for that agent using ORIGINAL query
+        output = handle_agent_switch(state, selected_agent)
+    
     return output
 
 

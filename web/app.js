@@ -78,10 +78,26 @@ async function sendToBackend(text){
             })
         })
 
+        //const data = await res.json()
+
+        //console.log("✅ RESPONSE:", data)
+        
         const data = await res.json()
 
-        console.log("✅ RESPONSE:", data)
+        removeThinking()
 
+        // Format text (single line breaks)
+        const formatted = data.content.replace(/\n+/g, "<br>")
+
+        // Render agent response
+        appendMessage("assistant", formatted)
+
+        // 🔥 HANDLE CHOICE TYPE
+        if(data.type === "choice"){
+            renderChoices(data.choices)
+        }
+        
+        
         // Replace "Thinking..." with formatted response
         updateThinking(data.content)
         
@@ -100,6 +116,48 @@ async function sendToBackend(text){
     }
 }
 
+// -------------------------------
+// NEXT AGENT SELECTION
+// -------------------------------
+
+function renderChoices(choices){
+
+    const chatBox = document.getElementById("chat")
+
+    const container = document.createElement("div")
+    container.className = "choice-container"
+
+    choices.forEach(choice => {
+        const btn = document.createElement("button")
+
+        btn.innerText = choice.label
+        btn.className = "choice-btn"
+
+        btn.onclick = () => {
+            handleAgentSelection(choice.id)
+            container.remove() // remove buttons after click
+        }
+
+        container.appendChild(btn)
+    })
+
+    chatBox.appendChild(container)
+    chatBox.scrollTop = chatBox.scrollHeight
+}
+
+// -------------------------------
+// HANDLE NEXT AGENT SELECTION
+// -------------------------------
+
+function handleAgentSelection(agentId){
+
+    console.log("🧭 Selected agent:", agentId)
+
+    // Send agent selection as special message
+    sendToBackend(`__agent__:${agentId}`)
+
+    showThinking()
+}
 
 // -------------------------------
 // SHOW "THINKING..."
