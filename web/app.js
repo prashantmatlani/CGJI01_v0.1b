@@ -117,20 +117,26 @@ function removeThinking(){
 }
 
 // Chat Renderer
-function appendMessage(role, text){
-    
-    const chatBox = document.getElementById("chat")
+function appendMessage(role, text, agent="Jung"){
 
-    if(!chatBox){
-        console.error("❌ chat div not found")
-        return
-    }
+    const chatBox = document.getElementById("chat")
 
     const msg = document.createElement("div")
 
     msg.className = role === "user" ? "user-msg" : "ai-msg"
 
-    msg.innerText = text
+    let prefix = ""
+    if(role === "user"){
+        prefix = "<b>Client:</b> "
+    } else {
+        prefix = `<b>Agent ${agent}:</b> `
+    }
+
+    const formattedText = text.replace(/\n/g, "<br><br>")
+
+    msg.innerHTML = prefix + formattedText
+
+    msg.style.marginBottom = "12px"
 
     chatBox.appendChild(msg)
 
