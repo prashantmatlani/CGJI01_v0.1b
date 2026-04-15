@@ -50,7 +50,7 @@ async function sendFollowup(){
 async function sendToBackend(text){
     
     //const API_URL = "http://localhost:8000/chat"
-    const API_URL = "/chat"
+    const API_URL = window.location.origin + "/chat"
     
     console.log("📡 Sending to backend:", text)
     
