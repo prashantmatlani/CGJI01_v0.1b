@@ -110,8 +110,15 @@ function updateThinking(text){
 
 // Chat Renderer
 function appendMessage(role, text){
-
+    
+    removeThinking()
+    
     const chatBox = document.getElementById("chat")
+
+    if(!chatBox){
+        console.error("❌ chat div not found")
+        return
+    }
 
     const msg = document.createElement("div")
 
