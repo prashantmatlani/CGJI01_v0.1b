@@ -58,7 +58,7 @@ async function sendFollowup(){
 
 
 // -------------------------------
-// BACKEND CALL (SHARED)
+// BACKEND CALL (SHARED) - PASS AGENT FROM BACKEND TO FRONTEND
 // -------------------------------
 async function sendToBackend(text){
 
@@ -86,7 +86,8 @@ async function sendToBackend(text){
         const formatted = data.content.replace(/\n+/g, "<br>")
 
         // Update thinking, prevents duplicate messages
-        updateThinking(formatted)
+        //updateThinking(formatted)
+		updateThinking(data.content, data.agent)
 
         // 🔥 HANDLE CHOICE TYPE
         if(data.type === "choice"){
@@ -174,13 +175,15 @@ function showThinking(){
 // -------------------------------
 // REPLACE "THINKING..." WITH RESPONSE
 // -------------------------------
-function updateThinking(text){
+function updateThinking(text, agent="jung"){
 
     let thinking = document.getElementById("thinking")
 
     const formatted = text.replace(/\n+/g, "<br>")
 
-    // If thinking doesn't exist (edge case), create new message
+    // Convert agent id → display name
+    const agentName = formatAgentName(agent)
+
     if(!thinking){
         const chatBox = document.getElementById("chat")
 
@@ -191,7 +194,7 @@ function updateThinking(text){
     }
 
     thinking.innerHTML = `
-        <span class="label-agent">Agent Jung:</span>
+        <span class="label-agent">Agent ${agentName}:</span>
         <br><br>
         ${formatted}
     `
@@ -234,6 +237,26 @@ function appendMessage(role, text){
     chatBox.appendChild(msg)
 
     chatBox.scrollTop = chatBox.scrollHeight
+}
+
+
+// -------------------------------
+// FORMAT AGENT NAME
+// -------------------------------
+function formatAgentName(agent){
+
+    const map = {
+        jung: "Jung",
+        dream: "Dream",
+        shadow: "Shadow",
+        myth: "Myth",
+        epistemic: "Epistemic",
+        bpsy: "BPsy",
+        jred: "JRed",
+        synthesis: "Synthesis"
+    }
+
+    return map[agent] || agent
 }
 
 

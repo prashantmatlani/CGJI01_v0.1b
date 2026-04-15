@@ -91,14 +91,30 @@ async def chat(req: Request):
 """    
 
 # HANDLE AGENT SWITCH - FUNCTION
-#def handle_agent_switch(state, agent_name):
-    # call respective agent using original query
-#    return run_specific_agent(agent_name, state.initial_query)
-
 def handle_agent_switch(state, agent_name):
 
+    output = run_specific_agent(agent_name, state.initial_query)
+
+    # Ensure output is a dict
+    if not isinstance(output, dict):
+        output = {
+            "type": "error",
+            "content": "Agent returned invalid response"
+        }
+    
+    print("🧠 AGENT SWITCH OUTPUT:", output)
+    
+    # Inject agent identity
+    output["agent"] = agent_name
+
+    return output
+
+
+
+#def handle_agent_switch(state, agent_name):
+
     # 🔥 TEMP: route through existing system
-    print(f"⚠️ Switching to {agent_name}, but using handle_turn for now")
+#    print(f"⚠️ Switching to {agent_name}, but using handle_turn for now")
 
     return handle_turn(state, state.initial_query)
 

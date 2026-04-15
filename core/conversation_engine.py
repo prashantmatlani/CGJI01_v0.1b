@@ -89,6 +89,7 @@ def handle_turn(state, user_input):
 
         output = {
             "type": "response",
+            "agent": "jung",   # include agent identity in every response
             "content": result,
             "next_stage": "jung_followup"
         }
