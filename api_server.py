@@ -13,9 +13,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
+
+# CREATE APP FIRST
+app = FastAPI()
+
+# THEN MOUNT STATIC
 app.mount("/static", StaticFiles(directory="web"), name="static")
 
-app = FastAPI()
 
 # sessions = {}
 
