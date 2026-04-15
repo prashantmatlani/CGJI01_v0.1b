@@ -69,7 +69,9 @@ async function sendToBackend(text){
         const data = await res.json()
 
         console.log("✅ RESPONSE:", data)
-
+        
+        console.log("📤 Rendering to UI:", data.content)
+        
         //removeThinking()
 		//appendMessage("assistant", data.content)
 		
