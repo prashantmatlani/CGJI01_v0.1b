@@ -84,7 +84,15 @@ async function sendToBackend(text){
 
         // Replace "Thinking..." with formatted response
         updateThinking(data.content)
-
+        
+        // Store agent memory if present
+        if(data.agent_log){
+            const agent = data.agent_log.agent
+            window.agentMemory[agent] = data.agent_log.history
+            updateAgentBox(agent, data.agent_log.history)
+        }
+        
+        
     }catch(err){
         console.error("❌ ERROR:", err)
         removeThinking()
@@ -122,7 +130,8 @@ function updateThinking(text){
     const thinking = document.getElementById("thinking")
 
     // Format text (preserve paragraphs)
-    const formatted = text.replace(/\n/g, "<br><br>")
+    //const formatted = text.replace(/\n/g, "<br><br>")
+    const formatted = text.replace(/\n+/g, "<br>")
 
     if(thinking){
         thinking.innerHTML = `
@@ -169,6 +178,29 @@ function appendMessage(role, text){
     chatBox.appendChild(msg)
 
     chatBox.scrollTop = chatBox.scrollHeight
+}
+
+
+// -------------------------------
+// UPDATE AGENT BOX
+// -------------------------------
+
+function updateAgentBox(agent, history){
+
+    const box = document.getElementById(agent)
+    if(!box) return
+
+    let html = ""
+
+    history.forEach(entry => {
+        if(entry.role === "client"){
+            html += `<b>Client:</b> ${entry.text}<br><br>`
+        } else {
+            html += `<b>Agent:</b> ${entry.text}<br><br>`
+        }
+    })
+
+    box.innerHTML = html
 }
 
 
