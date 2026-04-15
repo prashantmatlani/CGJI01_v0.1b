@@ -1,19 +1,28 @@
-body{
-font-family:Arial;
-margin:40px;
-background:#111;
-color:#eee;
+body {
+    background-color: #0f172a;   /* dark navy */
+    color: #e2e8f0;              /* light text */
+    font-family: Arial, sans-serif;
 }
 
-textarea{
-width:100%;
-height:120px;
-margin-bottom:20px;
+textarea, input {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+    padding: 10px;
+    width: 100%;
 }
 
-button{
-padding:10px 20px;
-font-size:16px;
+button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1d4ed8;
 }
 
 .grid{
@@ -50,14 +59,29 @@ background:#333;
     font-size: 14px;
 }
 
+
+/* Chat styling */
 .user-msg {
-    background-color: #e8f0ff;
+    background-color: #1e40af;
     padding: 10px;
-    border-radius: 8px;
+    margin: 10px 0;
+    border-radius: 6px;
 }
 
 .ai-msg {
-    background-color: #f4f4f4;
+    background-color: #334155;
     padding: 10px;
-    border-radius: 8px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+/* Label styles */
+.label-client {
+    color: #93c5fd;
+    font-weight: bold;
+}
+
+.label-agent {
+    color: #fca5a5;
+    font-weight: bold;
 }

@@ -74,6 +74,9 @@ async function sendToBackend(text){
 
         appendMessage("assistant", data.content.trim())
 		
+        let formatted = data.content.replace(/\n/g, "<br>")
+        appendMessage("assistant", formatted)
+        
 		// replace Thinking instead of removing
 		updateThinking(data.content)
 
@@ -121,17 +124,13 @@ function appendMessage(role, text){
 
     const msg = document.createElement("div")
 
-    // 🔹 Styling by role
     if(role === "user"){
+        msg.innerHTML = `<span class="label-client">Client:</span><br><br>${text}`
         msg.className = "user-msg"
-        msg.innerHTML = `<strong>Client:</strong><br><br>${formatText(text)}`
-    }else{
+    } else {
+        msg.innerHTML = `<span class="label-agent">Agent Jung:</span><br><br>${text}`
         msg.className = "ai-msg"
-        msg.innerHTML = `<strong>Agent Jung:</strong><br><br>${formatText(text)}`
     }
-
-    // spacing between messages
-    msg.style.marginBottom = "20px"
 
     chatBox.appendChild(msg)
 
@@ -149,7 +148,7 @@ async function endSession(){
 
     console.log("🛑 Ending session")
 
-    await fetch("http://localhost:8000/chat",{
+    await fetch(window.location.origin + "/chat",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
