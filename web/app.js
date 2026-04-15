@@ -108,10 +108,16 @@ function updateThinking(text){
     }
 }
 
+
+function removeThinking(){
+    const thinking = document.getElementById("thinking")
+    if(thinking){
+        thinking.remove()
+    }
+}
+
 // Chat Renderer
 function appendMessage(role, text){
-    
-    removeThinking()
     
     const chatBox = document.getElementById("chat")
 
