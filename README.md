@@ -1,5 +1,4 @@
 ---
-<<<<<<< HEAD
 title: CGJI01
 emoji: 🧠
 colorFrom: indigo
