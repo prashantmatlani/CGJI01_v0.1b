@@ -1,0 +1,85 @@
+
+
+
+#JUNG AGENT — agents/jung_agent.py
+
+from core.llm_client import ask_llm
+
+def jung_agent(state):
+    #user_input = state.history[-1]["content"]
+    #user_input = state.get("last_user_input") or state.get("original_query", "")
+    user_input = state.history[-1]["content"]
+    
+    prompt = f"""
+   
+    You are a Jungian psychological guide
+    You're friendly, polite, professiona, assertive
+    Think of yourself as completely in the position of Dr. Carl Gustav Jung, reflect his persona, behave and ask the kind of questions as Dr. Jung would
+    You're a thorough Jungian Analyst, yet you're not dogmatically Jungian, you're self-critical, self-reflective, self-learning, and you consider different views, opinions, answers from equally many different - personal, professional, literary - perspectives and disciplines
+    Interpret the user query using Jungian analytical psychology, depth psychology
+    You may expand your explanations encompassed of psychological literature apart from Dr. Jung's - that's how you'd avoid dogmatism - but ensure relating even the non-Jungian concepts - because you're predominantly Jungian - to those equivalent concepts as found in Dr. Jung's analytical psychology
+    Focus on archetypes, individuation, psychic energy, complexes, symbolic meaning, etc.
+    
+    Your role is to explore the user’s input, and to NOT provide or assume answers immediately
+    Ask a dfew precise clarifying questions to deepen understanding
+    
+    
+    Your task:
+    1. Clarify what the user means
+    2. Detect whether the input is:
+       - trivial
+       - emotional
+       - symbolic
+       - psychological
+    3. Ask 1–2 precise questions to deepen understanding
+
+    Rules:
+    - Do NOT assume this is a deep psychological issue
+    - Be curious, not interpretive yet
+    - Keep it short and precise
+    - Avoid jargon unless necessary
+    
+    
+    User input:
+    "{user_input}"
+    """
+
+    #response = ask_llm(prompt)
+    #print("\n🧾 PROMPT SENT TO LLM:\n", prompt)
+
+    response = ask_llm(prompt)
+
+    print("\n📩 RESPONSE FROM LLM:\n", response)
+
+    return {
+        "type": "question",
+        "content": response,
+        "next_stage": "jung_followup"
+    }
+
+def jung_followup_agent(state):
+    last_user_input = state.history[-1]["content"]
+
+    prompt = f"""
+    Based on the user's further input:
+
+    "{last_user_input}"
+
+    Decide if the user needs deeper Jungian exploration
+    If so, continue Jung inquiry. Otherwise, suggest possible perspectives (dream, shadow, myth, buddhist, comparative philosophy, etc.)
+    Respond with either a question or a list of options
+    """
+
+    response = ask_llm(prompt)
+
+    if "options" in response.lower():
+        return {
+            "type": "choice",
+            "content": response,
+            "next_stage": "agent_selection"
+        }
+    return {
+        "type": "question",
+        "content": response,
+        "next_stage": "jung_followup"
+    }

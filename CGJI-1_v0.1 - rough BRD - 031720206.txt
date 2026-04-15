@@ -1,0 +1,260 @@
+
+________________________________________
+CGJI01
+Cognitive–Generative Jungian Intelligence System
+Functional & Business Requirements Document
+________________________________________
+1. Executive Overview
+CGJI01 is a multi-agent analytical system designed to interpret psychological material through the framework of Analytical Psychology (Carl Jung) while integrating perspectives from:
+•	depth psychology
+•	mythology
+•	Buddhist psychology
+•	epistemology
+•	comparative philosophy
+•	symbolic analysis
+The system uses a modular multi-agent architecture, where each agent represents a distinct interpretive lens applied to the user's input.
+Rather than producing a single interpretation, CGJI01 generates multi-perspectival analysis, which is then integrated through a synthesis layer.
+The system supports two main interaction modes:
+1.	Psychological Material Analysis Mode
+Structured multi-agent interpretation of psychological content.
+2.	Jung Unified Mode (JU)
+Conversational Jungian dialogue with optional expansion into other perspectives.
+CGJI01 aims to function as a cognitive augmentation tool for exploring psychological material, symbolic meaning, and philosophical implications.
+________________________________________
+2. System Objectives
+The primary objectives of CGJI01 are:
+1. Multi-perspectival interpretation
+Allow psychological material to be interpreted through multiple intellectual frameworks.
+2. Depth-psychological exploration
+Center all interpretations around Analytical Psychology.
+3. Symbolic pattern detection
+Identify archetypal motifs and symbolic structures in narratives.
+4. Cognitive augmentation
+Provide users with deeper insight into psychological patterns.
+5. Controlled interpretive expansion
+Allow optional perspectives from other traditions without overriding Jungian foundations.
+________________________________________
+3. Core Conceptual Foundations
+CGJI01 integrates several intellectual domains.
+Analytical Psychology
+Foundation framework guiding the entire system.
+Key concepts include:
+•	archetypes
+•	shadow
+•	individuation
+•	symbolic transformation
+•	unconscious dynamics
+Comparative Philosophy
+Explores parallels between Western and Eastern philosophical traditions.
+Buddhist Psychology
+Provides insights into mind, attachment, suffering, and awareness.
+Mythological Studies
+Examines symbolic archetypal narratives across cultures.
+Epistemology
+Interrogates the limits and structures of knowledge and interpretation.
+________________________________________
+4. System Architecture
+CGJI01 operates through a multi-agent architecture.
+Each agent performs a specialized analysis of the user’s input.
+High-Level Workflow
+User Input
+   ↓
+Agent Orchestrator
+   ↓
+Individual Agents Execute
+   ↓
+Results Collected
+   ↓
+Synthesis Agent
+   ↓
+Facilitator Agent
+   ↓
+Final Response
+________________________________________
+5. Operational Modes
+Mode 1 — Dream Analysis
+Focuses specifically on symbolic interpretation of dream narratives.
+The system emphasizes:
+•	dream imagery
+•	archetypal motifs
+•	unconscious symbolism
+________________________________________
+Mode 2 — Psychological Material Analysis
+This is the primary analytical pipeline.
+User input is interpreted through multiple agents sequentially.
+Agents may optionally be executed depending on user confirmation.
+The output is integrated through synthesis.
+________________________________________
+Mode 3 — Jung Unified (JU)
+A conversational interface centered on Jungian dialogue.
+JU:
+•	begins with Jungian interpretation
+•	detects when other perspectives may be relevant
+•	asks user permission before consulting other agents
+•	supports interactive discussion
+________________________________________
+6. Agent Architecture
+CGJI01 currently includes the following agents.
+Total: 8 agents
+________________________________________
+7. Jung Agent
+Purpose
+The Jung Agent provides the core analytical psychology interpretation of the user's input.
+This agent is foundational and establishes the primary interpretive context.
+Analytical Focus
+•	archetypal patterns
+•	unconscious dynamics
+•	individuation process
+•	symbolic meaning
+•	inner psychological conflict
+Value
+The Jung Agent ensures the system remains grounded in depth psychology.
+All other agents are secondary perspectives.
+________________________________________
+8. Dream Agent
+Purpose
+The Dream Agent specializes in dream symbolism and unconscious imagery.
+Analytical Focus
+•	dream motifs
+•	symbolic figures
+•	archetypal imagery
+•	narrative symbolism
+Value
+Dream analysis is a central method in Jungian psychology.
+This agent interprets dream content through symbolic language.
+________________________________________
+9. Shadow Agent
+Purpose
+The Shadow Agent analyzes disowned or repressed aspects of personality.
+Analytical Focus
+•	projection
+•	denied traits
+•	unconscious conflicts
+•	psychological compensation
+Value
+Understanding the shadow is essential to individuation.
+This agent helps reveal hidden psychological tensions.
+________________________________________
+10. Myth Agent
+Purpose
+The Myth Agent interprets psychological material through mythological parallels.
+Analytical Focus
+•	archetypal stories
+•	mythic patterns
+•	hero journey structures
+•	symbolic narratives
+Value
+Myths often encode universal psychological themes.
+This agent reveals narrative structures underlying personal experiences.
+________________________________________
+11. Epistemic Agent
+Purpose
+The Epistemic Agent examines how knowledge and interpretation are formed.
+Analytical Focus
+•	limits of interpretation
+•	epistemological assumptions
+•	meaning construction
+Value
+This prevents over-interpretation and encourages intellectual rigor.
+________________________________________
+12. Buddhist Psychology Agent (BPsy)
+Purpose
+The BPsy Agent introduces insights from Buddhist psychological traditions.
+Analytical Focus
+•	attachment
+•	suffering
+•	impermanence
+•	mental conditioning
+Value
+Buddhist psychology provides a sophisticated analysis of mental processes.
+This perspective complements Jungian insight.
+________________________________________
+13. Comparative Philosophy Agent (JRed)
+Purpose
+The JRed Agent compares ideas across philosophical traditions.
+Analytical Focus
+•	Western philosophy
+•	Eastern philosophy
+•	metaphysical parallels
+•	philosophical tensions
+Value
+This agent expands analysis into broader intellectual contexts.
+________________________________________
+14. Synthesis Agent
+Purpose
+The Synthesis Agent integrates insights produced by all other agents.
+Function
+•	summarize perspectives
+•	resolve contradictions
+•	produce integrated interpretation
+Value
+Ensures the system provides a coherent final output.
+________________________________________
+15. Facilitator Agent
+Purpose
+Acts as the dialogical mediator between system output and user.
+Functions
+•	clarify insights
+•	contextualize interpretations
+•	maintain balanced tone
+Value
+Prevents the system from appearing prescriptive or deterministic.
+________________________________________
+16. Detection & Governance Layer
+CGJI01 includes governance mechanisms that guide agent behavior.
+These include:
+Projection detection
+Detects language indicating psychological projection.
+Symbolic trigger detection
+Identifies archetypal themes.
+Domain triggers
+Detects when mythological, philosophical, or dream analysis may be relevant.
+________________________________________
+17. Jung Unified Agent
+The Jung Unified Agent is a conversational agent that:
+•	begins with Jungian interpretation
+•	detects parallel philosophical domains
+•	asks user permission before expanding analysis
+It operates as a meta-agent coordinating other agents.
+________________________________________
+18. Scholarly Retrieval Layer (Planned / Emerging)
+Future versions may incorporate scholarly retrieval from sources such as:
+•	academic philosophy encyclopedias
+•	psychological literature
+•	comparative religion research
+This enables responses grounded in academic knowledge.
+________________________________________
+19. Potential Future Enhancements
+Possible extensions include:
+•	symbolic archetype detection engine
+•	neuro-symbolic modeling
+•	ARCH behavioral framework integration
+•	local knowledge corpus retrieval
+•	research-grade analytical reporting
+________________________________________
+20. Target Users
+CGJI01 may be valuable for:
+•	psychologists
+•	philosophers
+•	researchers
+•	writers
+•	individuals exploring personal development
+The system is intended as a reflective analytical tool, not a clinical diagnostic system.
+________________________________________
+21. Ethical Considerations
+The system should avoid:
+•	deterministic psychological labeling
+•	prescriptive interpretations
+•	clinical diagnosis
+It should instead emphasize:
+•	reflection
+•	interpretive plurality
+•	user autonomy
+________________________________________
+22. Summary
+CGJI01 represents a novel AI-driven analytical framework combining:
+•	analytical psychology
+•	symbolic interpretation
+•	comparative philosophy
+•	cognitive dialogue
+Its modular architecture enables flexible interpretive exploration of psychological material.

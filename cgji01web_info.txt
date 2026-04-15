@@ -1,0 +1,4 @@
+
+run the server via terminal by navigating to cd C:\Users\wd052\OneDrive\Desktop\00\Works\S-w_AN\CGJI01\"CGJI01_v0.1 b" 
+
+uvicorn api_server:app --host 0.0.0.0 --port 8000
