@@ -9,6 +9,12 @@ from core.conversation_engine import handle_turn
 from core.agent_orchestrator import run_agents
 from core.input_classifier import is_meaningful_input
 
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+app.mount("/static", StaticFiles(directory="web"), name="static")
+
 app = FastAPI()
 
 # sessions = {}
@@ -27,9 +33,14 @@ class ChatRequest(BaseModel):
     session_id: str
     message: str
 
-@app.get("/")
-def root():
-    return {"status": "CGJI01 API running"}
+
+@app.get("/", response_class=HTMLResponse)
+def serve_ui():
+    return FileResponse("web/index.html")
+
+#@app.get("/")
+#def root():
+#    return {"status": "CGJI01 API running"}
 
 #@app.post("/analyze")
 #def analyze(req: Request):
