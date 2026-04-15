@@ -49,3 +49,15 @@ background:#333;
     padding: 10px;
     font-size: 14px;
 }
+
+.user-msg {
+    background-color: #e8f0ff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.ai-msg {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+}

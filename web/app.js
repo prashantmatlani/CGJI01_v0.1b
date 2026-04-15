@@ -71,9 +71,8 @@ async function sendToBackend(text){
         console.log("✅ RESPONSE:", data)
         
         console.log("📤 Rendering to UI:", data.content)
-        
-        //removeThinking()
-		//appendMessage("assistant", data.content)
+
+        appendMessage("assistant", data.content.trim())
 		
 		// replace Thinking instead of removing
 		updateThinking(data.content)
@@ -92,9 +91,15 @@ function showThinking(){
     const thinking = document.createElement("div")
     thinking.id = "thinking"
     thinking.className = "ai-msg"
-    thinking.innerText = "Thinking..."
+    thinking.innerHTML = `<strong>Agent Jung:</strong><br><br>Thinking...`
+    thinking.style.marginBottom = "20px"
 
     chatBox.appendChild(thinking)
+}
+
+function removeThinking(){
+    const thinking = document.getElementById("thinking")
+    if(thinking) thinking.remove()
 }
 
 
@@ -109,40 +114,35 @@ function updateThinking(text){
 }
 
 
-function removeThinking(){
-    const thinking = document.getElementById("thinking")
-    if(thinking){
-        thinking.remove()
-    }
-}
-
 // Chat Renderer
-function appendMessage(role, text, agent="Jung"){
+function appendMessage(role, text){
 
     const chatBox = document.getElementById("chat")
 
     const msg = document.createElement("div")
 
-    msg.className = role === "user" ? "user-msg" : "ai-msg"
-
-    let prefix = ""
+    // 🔹 Styling by role
     if(role === "user"){
-        prefix = "<b>Client:</b> "
-    } else {
-        prefix = `<b>Agent ${agent}:</b> `
+        msg.className = "user-msg"
+        msg.innerHTML = `<strong>Client:</strong><br><br>${formatText(text)}`
+    }else{
+        msg.className = "ai-msg"
+        msg.innerHTML = `<strong>Agent Jung:</strong><br><br>${formatText(text)}`
     }
 
-    const formattedText = text.replace(/\n/g, "<br><br>")
-
-    msg.innerHTML = prefix + formattedText
-
-    msg.style.marginBottom = "12px"
+    // spacing between messages
+    msg.style.marginBottom = "20px"
 
     chatBox.appendChild(msg)
 
     chatBox.scrollTop = chatBox.scrollHeight
 }
 
+
+// Preserve Paragraph Breaks
+function formatText(text){
+    return text.replace(/\n/g, "<br>")
+}
 
 // End session
 async function endSession(){
