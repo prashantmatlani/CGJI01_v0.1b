@@ -104,31 +104,41 @@ def chat(req: ChatRequest):
 
     session_id = req.session_id
     message = req.message
+
     print("\n🧾 RAW REQUEST BODY:", req)
-    
+
     if session_id not in sessions:
         sessions[session_id] = ConversationState()
 
     state = sessions[session_id]
-
-    #output = handle_turn(state, message)
+    
+    
+    if not state.initial_query:
+        state.initial_query = message
     
     print("\n📥 USER MESSAGE:", message)
-    output = handle_turn(state, message)
-    print("\n📤 RESPONSE TO UI:", output)
-    
-    if output["type"] == "end":
-        del sessions[session_id]
-    
-    # HANDLE AGENT SWITCH
+
+    # HANDLE AGENT SWITCH FIRST
     if message.startswith("__agent__:"):
         selected_agent = message.split(":")[1]
-    
+
+        print("🧭 Switching to agent:", selected_agent)
+
         state.current_agent = selected_agent
-    
-        # restart flow for that agent using ORIGINAL query
+
         output = handle_agent_switch(state, selected_agent)
-    
+
+        print("\n📤 RESPONSE TO UI:", output)
+        return output
+
+    # 🔁 NORMAL FLOW
+    output = handle_turn(state, message)
+
+    print("\n📤 RESPONSE TO UI:", output)
+
+    if output["type"] == "end":
+        del sessions[session_id]
+
     return output
 
 

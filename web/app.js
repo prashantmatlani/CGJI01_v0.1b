@@ -78,10 +78,6 @@ async function sendToBackend(text){
             })
         })
 
-        //const data = await res.json()
-
-        //console.log("✅ RESPONSE:", data)
-        
         const data = await res.json()
 
         removeThinking()
@@ -89,26 +85,21 @@ async function sendToBackend(text){
         // Format text (single line breaks)
         const formatted = data.content.replace(/\n+/g, "<br>")
 
-        // Render agent response
-        appendMessage("assistant", formatted)
+        // Update thinking, prevents duplicate messages
+        updateThinking(formatted)
 
         // 🔥 HANDLE CHOICE TYPE
         if(data.type === "choice"){
             renderChoices(data.choices)
         }
-        
-        
-        // Replace "Thinking..." with formatted response
-        updateThinking(data.content)
-        
-        // Store agent memory if present
+
+        // 🔥 Store agent memory if present
         if(data.agent_log){
             const agent = data.agent_log.agent
             window.agentMemory[agent] = data.agent_log.history
             updateAgentBox(agent, data.agent_log.history)
         }
-        
-        
+
     }catch(err){
         console.error("❌ ERROR:", err)
         removeThinking()
