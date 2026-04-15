@@ -1,4 +1,6 @@
 
+# api_server.py
+
 import requests
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
@@ -89,11 +91,16 @@ async def chat(req: Request):
 """    
 
 # HANDLE AGENT SWITCH - FUNCTION
-def handle_agent_switch(state, agent_name):
+#def handle_agent_switch(state, agent_name):
     # call respective agent using original query
-    return run_specific_agent(agent_name, state.initial_query)
+#    return run_specific_agent(agent_name, state.initial_query)
 
+def handle_agent_switch(state, agent_name):
 
+    # 🔥 TEMP: route through existing system
+    print(f"⚠️ Switching to {agent_name}, but using handle_turn for now")
+
+    return handle_turn(state, state.initial_query)
 
 sessions = {}
 
@@ -112,7 +119,7 @@ def chat(req: ChatRequest):
 
     state = sessions[session_id]
    
-   # SET INITIAL QUERY ONLY FOR FIRST, INITIAL USER MESSAGE; IGNORE SYSTEM MESSAGES
+    # SET INITIAL QUERY ONLY FOR FIRST, INITIAL USER MESSAGE; IGNORE SYSTEM MESSAGES
     if not state.initial_query and not message.startswith("__agent__:"):
         state.initial_query = message
         
