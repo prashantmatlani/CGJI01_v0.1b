@@ -80,7 +80,7 @@ async function sendToBackend(text){
 
         const data = await res.json()
 
-        removeThinking()
+        //removeThinking()
 
         // Format text (single line breaks)
         const formatted = data.content.replace(/\n+/g, "<br>")
@@ -176,20 +176,27 @@ function showThinking(){
 // -------------------------------
 function updateThinking(text){
 
-    const thinking = document.getElementById("thinking")
+    let thinking = document.getElementById("thinking")
 
-    // Format text (preserve paragraphs)
-    //const formatted = text.replace(/\n/g, "<br><br>")
     const formatted = text.replace(/\n+/g, "<br>")
 
-    if(thinking){
-        thinking.innerHTML = `
-            <span class="label-agent">Agent Jung:</span>
-            <br><br>
-            ${formatted}
-        `
-        thinking.id = ""  // remove id so next cycle works cleanly
+    // If thinking doesn't exist (edge case), create new message
+    if(!thinking){
+        const chatBox = document.getElementById("chat")
+
+        thinking = document.createElement("div")
+        thinking.className = "ai-msg"
+
+        chatBox.appendChild(thinking)
     }
+
+    thinking.innerHTML = `
+        <span class="label-agent">Agent Jung:</span>
+        <br><br>
+        ${formatted}
+    `
+
+    thinking.id = ""
 }
 
 
