@@ -97,9 +97,6 @@ def handle_agent_switch(state, agent_name):
 
 sessions = {}
 
-if not state.initial_query:
-        state.initial_query = message
-
 @app.post("/chat")
 def chat(req: ChatRequest):
 
@@ -115,6 +112,10 @@ def chat(req: ChatRequest):
 
     state = sessions[session_id]
    
+   # SET INITIAL QUERY ONLY FOR FIRST, INITIAL USER MESSAGE; IGNORE SYSTEM MESSAGES
+    if not state.initial_query and not message.startswith("__agent__:"):
+        state.initial_query = message
+        
     print("\n📥 USER MESSAGE:", message)
 
     # HANDLE AGENT SWITCH FIRST
