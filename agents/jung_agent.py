@@ -78,8 +78,21 @@ def jung_followup_agent(state):
             "content": response,
             "next_stage": "agent_selection"
         }
+    #return {
+    #    "type": "question",
+    #    "content": response,
+    #    "next_stage": "jung_followup"
+    #}
     return {
-        "type": "question",
-        "content": response,
-        "next_stage": "jung_followup"
-    }
+    "type": "choice",   # 🔥 IMPORTANT
+    "agent": "jung",
+    "content": response + "\n\nWhich perspective would you like to explore next?",
+    "choices": [
+        {"id": "dream", "label": "1. Dream Analysis"},
+        {"id": "shadow", "label": "2. Shadow"},
+        {"id": "myth", "label": "3. Mythological"},
+        {"id": "epistemic", "label": "4. Epistemic"},
+        {"id": "bpsy", "label": "5. Buddhist Psychology"},
+        {"id": "jred", "label": "6. Comparative Philosophy"}
+    ]
+}

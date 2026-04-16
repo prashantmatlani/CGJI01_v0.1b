@@ -111,7 +111,6 @@ async function sendToBackend(text){
 // -------------------------------
 // NEXT AGENT SELECTION
 // -------------------------------
-
 function renderChoices(choices){
 
     const chatBox = document.getElementById("chat")
@@ -120,6 +119,7 @@ function renderChoices(choices){
     container.className = "choice-container"
 
     choices.forEach(choice => {
+
         const btn = document.createElement("button")
 
         btn.innerText = choice.label
@@ -127,7 +127,7 @@ function renderChoices(choices){
 
         btn.onclick = () => {
             handleAgentSelection(choice.id)
-            container.remove() // remove buttons after click
+            container.remove() // remove after click
         }
 
         container.appendChild(btn)
