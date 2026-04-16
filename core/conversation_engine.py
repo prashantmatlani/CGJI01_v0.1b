@@ -15,6 +15,9 @@ from agents.jred_agent import jred_response
 
 def handle_turn(state, user_input):
     
+    # 🔒 FORCE CURRENT AGENT CONTROL
+    if not hasattr(state, "current_agent") or state.current_agent is None:
+        state.current_agent = "jung"
     
     # -----------------------------
     # END SESSION
@@ -34,35 +37,45 @@ def handle_turn(state, user_input):
 
     state.add_user_input(user_input)
 
+    # Route the flow based on current agent
     stage = state.stage
-
+    agent = state.current_agent
+    
+    
     print(f"🧠 Current Stage: {stage}")
 
     # -----------------------------
     # JUNG FLOW
     # -----------------------------
-    if stage == "jung":
-        #output = jung_agent(state)
+    if agent == "jung":
         print("\n🟡 ENTERING JUNG AGENT")
         output = jung_agent(state)
-        print("🟢 JUNG AGENT OUTPUT:", output)
-        
-        
-    elif stage == "jung_followup":
-        output = jung_followup_agent(state)
 
-    # -----------------------------
-    # DREAM FLOW
-    # -----------------------------
-    elif stage == "dream":
+    elif agent == "dream":
         output = dream_agent(state)
 
-    elif stage == "dream_confirm":
-        output = dream_confirm(state)
+    elif agent == "shadow":
+        output = shadow_response(user_input)
 
-    elif stage == "dream_interpret":
-        output = dream_interpret(state)
+    elif agent == "myth":
+        output = myth_response(user_input)
 
+    elif agent == "epistemic":
+        output = epistemic_response(user_input)
+
+    elif agent == "bpsy":
+        output = bpsy_response(user_input)
+
+    elif agent == "jred":
+        output = jred_response(user_input)
+
+    else:
+        output = {
+            "type": "error",
+            "content": "Unknown agent."
+        }
+    
+    """
     # -----------------------------
     # OTHER AGENTS (fallback mode)
     # -----------------------------
@@ -93,12 +106,14 @@ def handle_turn(state, user_input):
             "content": result,
             "next_stage": "jung_followup"
         }
-
+    """
+    
     # -----------------------------
     # UPDATE STATE
     # -----------------------------
     state.add_system_output(output["content"])
-    state.stage = output.get("next_stage")
+    #state.stage = output.get("next_stage")
+    state.stage = None
 
     return output
     
