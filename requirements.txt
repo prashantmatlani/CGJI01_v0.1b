@@ -9,3 +9,4 @@ groq
 tavily-python
 sentence-transformers
 faiss-cpu
+chromadb
