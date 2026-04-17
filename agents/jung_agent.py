@@ -57,7 +57,7 @@ def jung_agent(state):
    
     {context_block}
 
-    {rag_context}
+    #{rag_context}
 
     User said:
     #{state.last_user_input}
