@@ -57,10 +57,10 @@ def jung_agent(state):
    
     {context_block}
 
-    #rag_context{}
+    rag_context{}
 
-    #User said:
-    #state.last_user_input{}
+    User said:
+    state.last_user_input{}
    
     You are a Jungian psychological guide, friendly, polite, professiona, assertive
     Introduce variation in lexis, i.e., do not be repetitious concerning the tone and words you use each time you pose probing, reflection inducing, questions.
