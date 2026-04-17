@@ -13,7 +13,32 @@ from agents.epistemic_agent import epistemic_response
 from agents.bpsy_agent import bpsy_response
 from agents.jred_agent import jred_response
 
+from core.tools.web_search import web_search
+from core.tools.search_trigger import needs_web_search
+
 def handle_turn(state, user_input):
+    
+    # -----------------------------
+    # OPTIONAL WEB SEARCH AUGMENT
+    # -----------------------------
+    search_results = None
+
+    if needs_web_search(user_input):
+        print("🌐 Triggering web search...")
+        search_results = web_search(user_input)
+
+        # convert results into text block
+        if search_results:
+            context = "\n\n".join([
+                f"{r['title']}\n{r['content']}"
+                for r in search_results
+            ])
+
+            # inject into state (temporary context)
+            state.web_context = context
+        else:
+            state.web_context = None
+    
     
     # 🔒 FORCE CURRENT AGENT CONTROL
     if not hasattr(state, "current_agent") or state.current_agent is None:
@@ -43,7 +68,7 @@ def handle_turn(state, user_input):
     
     
     print(f"🧠 Current Stage: {stage}")
-
+    
     # -----------------------------
     # JUNG FLOW
     # -----------------------------

@@ -1,16 +1,61 @@
 
-
-
 #JUNG AGENT — agents/jung_agent.py
 
 from core.llm_client import ask_llm
+from core.rag.rag_jung import retrieve
+from core.tools.web_search import web_search
+
+rag_chunks = retrieve(state.last_user_input)
+
+rag_context = "\n\n".join(rag_chunks)
+
 
 def jung_agent(state):
     #user_input = state.history[-1]["content"]
     #user_input = state.get("last_user_input") or state.get("original_query", "")
     user_input = state.history[-1]["content"]
     
+    # ---------------------------
+    # WEB SEARCH TRIGGER
+    # ---------------------------
+    if should_use_web(user_input):
+        print("🌐 Triggering Web Search...")
+        web_results = web_search(user_input)
+        state.web_context = web_results
+    else:
+        state.web_context = ""
+
+    # ---------------------------
+    # CONTEXT BLOCK
+    # ---------------------------
+    context_block = ""
+
+    if hasattr(state, "web_context") and state.web_context:
+        context_block = f"""
+    You may use the following real-world information:
+
+    {state.web_context}
+    """
+    
+    # -------------------------------
+    # 🔍 RETRIEVE CONTEXT
+    # -------------------------------
+    context = retrieve(user_input, k=3)
+
+    print("\n📚 RETRIEVED CONTEXT:\n", context[:500])
+
+    # -------------------------------
+    # 🧠 PROMPT (CRITICAL)
+    # -------------------------------
+    
     prompt = f"""
+   
+    {context_block}
+
+    {rag_context}
+
+    User said:
+    {state.last_user_input}
    
     You are a Jungian psychological guide, friendly, polite, professiona, assertive
     Introduce variation in lexis, i.e., do not be repetitious concerning the tone and words you use each time you pose probing, reflection inducing, questions.
@@ -51,7 +96,11 @@ def jung_agent(state):
     - Keep it short and precise
     - Avoid jargon unless necessary
     
-    
+    ---------------------
+    CONTEXT:
+    {context}
+    ---------------------
+
     User input:
     "{user_input}"
     """

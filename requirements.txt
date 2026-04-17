@@ -6,3 +6,6 @@ python-dotenv
 ollama
 sentence-transformers
 groq
+tavily-python
+sentence-transformers
+faiss-cpu
