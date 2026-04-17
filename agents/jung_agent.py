@@ -5,9 +5,9 @@ from core.llm_client import ask_llm
 from core.rag.rag_jung import retrieve
 from core.tools.web_search import web_search
 
-rag_chunks = retrieve(state.last_user_input)
+#rag_chunks = retrieve(state.last_user_input)
 
-rag_context = "\n\n".join(rag_chunks)
+#rag_context = "\n\n".join(rag_chunks)
 
 
 def jung_agent(state):
@@ -55,7 +55,7 @@ def jung_agent(state):
     {rag_context}
 
     User said:
-    {state.last_user_input}
+    #{state.last_user_input}
    
     You are a Jungian psychological guide, friendly, polite, professiona, assertive
     Introduce variation in lexis, i.e., do not be repetitious concerning the tone and words you use each time you pose probing, reflection inducing, questions.
