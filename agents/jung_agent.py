@@ -1,5 +1,5 @@
 
-#JUNG AGENT — agents/jung_agent.py
+# JUNG AGENT — ./agents/jung_agent.py
 
 from core.llm_client import ask_llm
 from core.rag.rag_jung import retrieve
@@ -9,7 +9,12 @@ from core.tools.web_search import web_search
 
 #rag_context = "\n\n".join(rag_chunks)
 
+# Trigger web search based on trigger-words; to avoid calling web search every time (slow + costly)
+def should_use_web(query):
+    trigger_words = ["what is", "who is", "define", "meaning of", "explain", "latest", "current"]
+    return any(word in query.lower() for word in trigger_words)
 
+# --- Main Function - Agent Jung --- 
 def jung_agent(state):
     #user_input = state.history[-1]["content"]
     #user_input = state.get("last_user_input") or state.get("original_query", "")

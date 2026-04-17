@@ -29,8 +29,3 @@ def web_search(query, max_results=3):
     except Exception as e:
         print("❌ Web search error:", e)
         return []
-
-# Trigger web search based on trigger-words; to avoid calling web search every time (slow + costly)
-def should_use_web(query):
-    trigger_words = ["what is", "who is", "define", "meaning of", "explain", "latest", "current"]
-    return any(word in query.lower() for word in trigger_words)
