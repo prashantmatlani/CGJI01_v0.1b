@@ -61,6 +61,17 @@ def handle_turn(state, user_input):
         state.stage = "jung"
 
     state.add_user_input(user_input)
+    
+    # store per-agent client message
+    if hasattr(state, "current_agent"):
+        if state.current_agent not in state.agent_histories:
+            state.agent_histories[state.current_agent] = []
+
+        state.agent_histories[state.current_agent].append({
+            "role": "client",
+            "text": user_input
+        })
+    
 
     # Route the flow based on current agent
     stage = state.stage
@@ -137,10 +148,42 @@ def handle_turn(state, user_input):
     # UPDATE STATE
     # -----------------------------
     state.add_system_output(output["content"])
-    #state.stage = output.get("next_stage")
-    state.stage = None
+    state.stage = output.get("next_stage")
+    #state.stage = None
 
-    return output
+    #return output
+    
+    # -----------------------------
+    # STORE PER-AGENT MEMORY
+    # -----------------------------
+    if not hasattr(state, "agent_histories"):
+        state.agent_histories = {}
+
+    if not hasattr(state, "current_agent"):
+        state.current_agent = "jung"
+
+    if state.current_agent not in state.agent_histories:
+        state.agent_histories[state.current_agent] = []
+
+    state.agent_histories[state.current_agent].append({
+        "role": "agent",
+        "text": output["content"]
+    })
+
+    # -----------------------------
+    # FINAL RESPONSE TO UI
+    # -----------------------------
+    return {
+        "type": output["type"],
+        "agent": state.current_agent,
+        "content": output["content"],
+        "next_stage": output.get("next_stage"),
+        "agent_log": {
+            "agent": state.current_agent,
+            "history": state.agent_histories[state.current_agent]
+        }
+    }
+    
     
     # -----------------------------
     # Backend Logging - Print conversation-flow on Terminal
