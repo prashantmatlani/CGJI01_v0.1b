@@ -4,17 +4,16 @@
 from core.llm_client import ask_llm
 #from core.rag.rag_jung import retrieve
 #from core.rag.base_retriever import retrieve
-from core.tools.web_search import web_search
+#from core.tools.web_search import web_search
 from core.context_builder import build_context
 
-#rag_chunks = retrieve(state.last_user_input)
 
-#rag_context = "\n\n".join(rag_chunks)
-
+"""
 # Trigger web search based on trigger-words; to avoid calling web search every time (slow + costly)
 def should_use_web(query):
     trigger_words = ["what is", "who is", "define", "meaning of", "explain", "latest", "current"]
     return any(word in query.lower() for word in trigger_words)
+"""
 
 # --- Main Function - Agent Jung --- 
 def jung_agent(state):
@@ -22,6 +21,7 @@ def jung_agent(state):
     #user_input = state.get("last_user_input") or state.get("original_query", "")
     user_input = state.history[-1]["content"]
     
+    """
     # ---------------------------
     # WEB SEARCH TRIGGER
     # ---------------------------
@@ -39,11 +39,19 @@ def jung_agent(state):
 
     if hasattr(state, "web_context") and state.web_context:
         context_block = f"""
-    You may use the following real-world information:
+    #You may use the following real-world information:
 
-    {state.web_context}
+    #{state.web_context}
     """
     
+    # -------------------------------
+    # 🔍 RAG CONTEXT
+    # -------------------------------
+    rag_chunks = retrieve(state.last_user_input)
+    rag_context = "\n\n".join(rag_chunks)
+
+    """
+
     # -------------------------------
     # 🔍 RETRIEVE CONTEXT
     # -------------------------------
@@ -54,17 +62,17 @@ def jung_agent(state):
     
     print("\n📚 RETRIEVED CONTEXT:\n", context[:500])
     
+    """
     # trigger web search only when agent has no info from pre-trained daa
     if "unknown" in state.history[-1]["content"].lower():
         state.web_context = web_search(state.history[-1]["content"])
+    """
 
     # -------------------------------
     # 🧠 PROMPT (CRITICAL)
     # -------------------------------
     
     system_prompt_jung = f"""
-   
-    {context_block}
     
     User input:
     "{user_input}"
@@ -75,7 +83,9 @@ def jung_agent(state):
     . When you're approached with a greeting, respond in a greeting-like manner, and pose a question as to how may you assist the questioner
 
     Tone Guidelines:
-    - Avoid excessive warmth or emotional language
+    - Avoid excessive warmth, greetings, emotional language
+    - Simply maintain politeness, and speak with depth
+    - Be calm, analytical, reflective, precise
     - Do NOT use phrases like "delighted", "my dear friend", "fascinating realm"
     - Be calm, precise, and intellectually grounded
     - Speak as a thoughtful analyst, not a motivational speaker
@@ -124,10 +134,12 @@ def jung_agent(state):
     . Encourage reflection rather than prescribe conclusions
     . Do not assume symbolic meaning prematurely
     . Provide a clear, nuanced explanation
-    . At all time ensure that your tone remains friendly, assertive, polite, respectful, and engaging. Avoid being overly formal or academic in tone. Instead, aim for a conversational style that invites the user into a collaborative exploration of their thoughts and feelings. Use language that is accessible and relatable, while still maintaining the depth and insight characteristic of a Jungian perspective
+    . At all time ensure that your tone remains friendly, assertive, polite, respectful, and engaging. 
+    . Aim for a conversational style that invites the user into a collaborative exploration of their thoughts and feelings. 
+    . Use language that is accessible and relatable, while still maintaining the depth and insight characteristic of a Jungian perspective
     . Encourage awareness of feelings, patterns, and inner conflicts
     . Stay grounded in the lived experience
-    . If you're unclear about anything or anything need more context, please ask for the same
+    . If you're unclear about anything or anything needs more context, please ask for the same
     . Think of yourself as completely in the position of Dr. Carl Gustav Jung, reflect his persona, behave and ask the kind of questions as Dr. Jung would
     . You're a thorough Jungian Analyst, yet you're not dogmatically Jungian, you're self-critical, self-reflective, self-learning, and you consider different views, opinions, answers from equally many different - personal, professional, literary - perspectives and disciplines
     . Interpret the user query using Jungian analytical psychology, depth psychology
@@ -136,14 +148,14 @@ def jung_agent(state):
     . Focus on prime Jungian concepts such as archetypes, individuation, psychic energy, complexes, symbolic meaning, etc.; but, again, do not limit yourself to these mentioned concepts alone, as the conversation lengthens, keep expanding upon the information you provide
     
     Your role is to explore the user’s input, and to NOT provide or assume answers immediately
-    Ask a few precise clarifying questions to deepen understanding
+    When needed, ask a few, precise, clarifying questions to deepen understanding
     
     """
 
     #response = ask_llm(prompt)
     #print("\n🧾 PROMPT SENT TO LLM:\n", prompt)
 
-    response = ask_llm(prompt)
+    response = ask_llm(system_prompt_jung)
 
     print("\n📩 RESPONSE FROM LLM:\n", response)
 

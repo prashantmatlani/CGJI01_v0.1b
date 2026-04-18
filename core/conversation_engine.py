@@ -62,17 +62,6 @@ def handle_turn(state, user_input):
 
     state.add_user_input(user_input)
     
-    # store per-agent client message
-    if hasattr(state, "current_agent"):
-        if state.current_agent not in state.agent_histories:
-            state.agent_histories[state.current_agent] = []
-
-        state.agent_histories[state.current_agent].append({
-            "role": "client",
-            "text": user_input
-        })
-    
-
     # Route the flow based on current agent
     stage = state.stage
     agent = state.current_agent
@@ -132,10 +121,10 @@ def handle_turn(state, user_input):
     if state.current_agent not in state.agent_histories:
         state.agent_histories[state.current_agent] = []
 
-    state.agent_histories[state.current_agent].append({
-        "role": "agent",
-        "text": output["content"]
-    })
+    #state.agent_histories[state.current_agent].append({
+    #    "role": "agent",
+    #    "text": output["content"]
+    #})
 
     # -----------------------------
     # FINAL RESPONSE TO UI
@@ -150,7 +139,6 @@ def handle_turn(state, user_input):
             "history": state.agent_histories[state.current_agent]
         }
     }
-    
     
     # -----------------------------
     # Backend Logging - Print conversation-flow on Terminal

@@ -1,6 +1,6 @@
 
 # RAG MODULE FOR JUNG AGENT
-# ./core/rag_jung.py
+# ./core/rag/rag_jung.py
 
 import faiss
 import numpy as np
@@ -35,5 +35,7 @@ def retrieve(query, k=3):
     
     if not results:
         return "No relevant Jungian context found."
-    else:
-        return "\n\n".join(results)
+    
+    return "\n\n".join(results)
+
+

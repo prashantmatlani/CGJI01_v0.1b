@@ -4,18 +4,22 @@
 
 class ConversationState:
     def __init__(self):
-        self.stage = "jung"  # Initial stage always starts with Jung
+        self.stage = "jung"
         self.history = []
-        self.active_agents = []
-        self.current_stage = "jung"
-        self.flags = {}
-        
-        self.initial_query = None   # stores first user query
-        
-        self.current_agent = "jung" # track active agent
+        self.initial_query = None
+
+        self.current_agent = "jung"
         self.agent_histories = {}
-    
+
+    # -----------------------------
+    # ADD USER INPUT (SINGLE SOURCE)
+    # -----------------------------
     def add_user_input(self, text):
+
+        # Prevent duplicate consecutive entries
+        if self.history and self.history[-1]["role"] == "client" and self.history[-1]["content"] == text:
+            return
+
         self.history.append({"role": "client", "content": text})
 
         agent = self.current_agent
@@ -28,8 +32,14 @@ class ConversationState:
             "text": text
         })
 
-
+    # -----------------------------
+    # ADD AGENT OUTPUT
+    # -----------------------------
     def add_system_output(self, text):
+
+        if self.history and self.history[-1]["role"] == "agent" and self.history[-1]["content"] == text:
+            return
+
         self.history.append({"role": "agent", "content": text})
 
         agent = self.current_agent
@@ -41,8 +51,3 @@ class ConversationState:
             "role": "agent",
             "text": text
         })
-
-    def add_user_input(self, text):
-        if not self.history or self.history[-1]["text"] != text:
-            self.history.append({"role": "client", "text": text})
-

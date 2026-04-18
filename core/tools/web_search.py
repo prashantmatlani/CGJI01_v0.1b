@@ -15,18 +15,27 @@ def web_search(query, max_results=3):
         )
 
         results = []
+        formatted_results = []
 
         for r in response.get("results", []):
             title = r.get("title")
             content = r.get("content")
             url = r.get("url")
 
-            print(f'🌐 Found info for client query: "{query}" at: {url}')
+            results.append({
+                "title": title,
+                "content": content,
+                "url": url
+            })
 
-            results.append(f"{title}\n{content}\nSource: {url}")
+            # ✅ LOG EACH SOURCE
+            print(f'🌐 Found info for query: "{query}" at: {url}')
 
-        return "\n\n".join(results)
+            formatted_results.append(f"{title}\n{content}\nSource: {url}")
+
+        return "\n\n".join(formatted_results)
 
     except Exception as e:
         print("❌ Web search error:", e)
-        return ""
+        return None
+
