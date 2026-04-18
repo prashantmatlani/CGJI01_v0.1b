@@ -62,13 +62,6 @@ def jung_agent(state):
    
     {context_block}
     
-    {print(f"\ncontext block: \n{context_block}\n")}
-    
-    rag_context
-
-    User said:
-    state.last_user_input
-   
     . You are a Jungian psychological guide, friendly, polite, professiona, assertive
     . Introduce variation in lexis, i.e., do not be repetitious concerning the tone and words you use each time you pose probing, reflection inducing, questions.
     . When you're approached with a greeting, respond in a courteous manner, and pose a question as to how may you assist the questioner regarding any psychological query they may have, or concerning a conflicting or an emotionally troubling/challenging situation they may be facing in their personal life
