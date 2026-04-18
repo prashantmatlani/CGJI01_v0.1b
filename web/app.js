@@ -3,18 +3,24 @@
 
 console.log("app.js loaded")
 
+// -------------------------------
+// GLOBAL STATE
+// -------------------------------
+window.conversationStarted = false
+
 // Global memory store for agents
 window.agentMemory = {}
 
-// -------------------------------
-// INITIAL TRIGGER (Run Analysis)
-// -------------------------------
-async function runAnalysis(){
+// ---------------------------------------------------------
+// INITIAL TRIGGER - Fire (Start Conversation; Run Analysis)
+// ---------------------------------------------------------
+//async function runAnalysis(){
+async function fire(){
 
     const inputBox = document.getElementById("initial_input")
     const text = inputBox.value
 
-    console.log("🚀 Run Analysis:", text)
+    //console.log("🚀 Run Analysis:", text)
 
     if(!text) return
 
@@ -22,6 +28,12 @@ async function runAnalysis(){
     if(!window.session_id){
         window.session_id = Math.random().toString(36).substring(7)
     }
+
+    // Mark conversation started
+    window.conversationStarted = true
+
+    // UI changes
+    switchToConversationMode()
 
     // Show user message
     appendMessage("user", text)
@@ -32,26 +44,30 @@ async function runAnalysis(){
     inputBox.value = ""
 
     // Disable Run Analysis permanently after first use
-    document.querySelector('button[onclick="runAnalysis()"]').disabled = true
+    //document.querySelector('button[onclick="runAnalysis()"]').disabled = true
 
     await sendToBackend(text)
 }
 
 
-// -------------------------------
-// FOLLOW-UP (Send button)
-// -------------------------------
-async function sendFollowup(){
+// -----------------------------------------------------
+// FUEL - FOLLOW-UP (Continue Conversation; Send button)
+// -----------------------------------------------------
+//async function sendFollowup(){
+async function fuel(){
 
-    const inputBox = document.getElementById("followup_input")
+    //const inputBox = document.getElementById("followup_input")
+    const inputBox = document.getElementById("main_input")
     const text = inputBox.value
 
-    console.log("📨 Follow-up:", text)
+    //console.log("📨 Follow-up:", text)
 
     if(!text) return
 
+    // Show user message
     appendMessage("user", text)
 
+    // Show "Thinking..."
     showThinking()
 
     inputBox.value = ""
@@ -59,6 +75,29 @@ async function sendFollowup(){
     await sendToBackend(text)
 }
 
+// -----------------
+// UI Mode Switcher
+// -----------------
+function switchToConversationMode(){
+
+    const inputBox = document.getElementById("main_input")
+
+    // Change placeholder
+    inputBox.placeholder = "Continue..."
+
+    // Replace Fire → Fuel
+    const fireBtn = document.getElementById("fire_btn")
+
+    const fuelBtn = document.createElement("button")
+    fuelBtn.innerText = "Fuel"
+    fuelBtn.id = "fuel_btn"
+    fuelBtn.onclick = fuel
+
+    fireBtn.replaceWith(fuelBtn)
+
+    // Show End Session button
+    document.getElementById("end_btn").style.display = "inline-block"
+}
 
 // -------------------------------
 // BACKEND CALL (SHARED) - PASS AGENT FROM BACKEND TO FRONTEND
@@ -285,7 +324,6 @@ function updateAgentBox(agent, history){
     box.innerHTML = html
 }
 
-
 // -------------------------------
 // END SESSION
 // -------------------------------
@@ -305,3 +343,18 @@ async function endSession(){
     window.session_id = null
     document.getElementById("chat").innerHTML = ""
 }
+
+// ---------------------------------------------------------
+// ENTER(SEND ACTION) & SHIFT+ENTER(INSERT NEW LINE) CONTROL
+// ---------------------------------------------------------
+document.getElementById("main_input").addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault()
+
+        if (window.conversationStarted) {
+            fuel()
+        } else {
+            fire()
+        }
+    }
+})

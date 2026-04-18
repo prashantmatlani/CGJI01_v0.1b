@@ -130,6 +130,10 @@ def chat(req: ChatRequest):
 
     print("\n🧾 RAW REQUEST BODY:", req)
 
+    # set flag to indicate the start of the conversation 
+    if not state.conversation_started:
+        state.conversation_started = True
+
     if session_id not in sessions:
         sessions[session_id] = ConversationState()
 

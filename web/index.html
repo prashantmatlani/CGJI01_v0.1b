@@ -1,55 +1,58 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>CGJI01 — Jungian Intelligence</title>
-<link rel="stylesheet" href="/static/style.css">
+    <title>CGJI01 — Jungian Intelligence</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
 
-<h1>CGJI01 — Multi-Agent Jungian Intelligence</h1>
+    <h1>CGJI01 — Multi-Agent Jungian Intelligence</h1>
 
-<!-- 🔹 INITIAL QUERY -->
-<textarea id="initial_input" placeholder="Enter your main query..."></textarea>
+    <!-- 🔹 SINGLE INPUT (REPLACES BOTH BOXES) -->
+    <p id="input_label">Enter query:</p>
 
-<button onclick="runAnalysis()">Run Analysis</button>
-<button onclick="endSession()">End Session</button>
+<textarea id="main_input"
+          placeholder="Let's talk"
+          style="width:100%; height:80px;"></textarea>
 
-<!-- 🔹 CHAT / FOLLOW-UP DISPLAY -->
-<div id="chat" style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px;"></div>
+    <!-- 🔹 FIRE BUTTON (STARTS CONVERSATION) -->
+    <button id="fire_btn" onclick="fire()">Fire</button>
 
+    <!-- 🔹 END SESSION (HIDDEN INITIALLY) -->
+    <button id="end_btn"
+            onclick="endSession()"
+            style="display:none;">
+        End Session
+    </button>
 
-<!-- 🔹 LABEL ABOVE FOLLOW-UP INPUT -->
-<p>Respond to the system:</p>
-<!-- 🔹 FOLLOW-UP INPUT -->
-<textarea id="followup_input" placeholder="Type your response..."></textarea>
+    <!-- 🔹 CHAT DISPLAY -->
+    <div id="chat"
+         style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-top:10px;"></div>
 
-<button onclick="sendFollowup()">Send</button>
+    <hr>
 
-<hr>
+    <!-- 🔹 AGENT GRID -->
+    <div class="grid">
 
-<!-- 🔹 AGENT GRID -->
-<div class="grid">
+        <div class="agent"><h2>Agent Jung</h2><pre id="jung"></pre></div>
+        <div class="agent"><h2>Agent Dream</h2><pre id="dream"></pre></div>
+        <div class="agent"><h2>Agent Shadow</h2><pre id="shadow"></pre></div>
+        <div class="agent"><h2>Agent Myth</h2><pre id="myth"></pre></div>
+        <div class="agent"><h2>Agent Epistemic</h2><pre id="epistemic"></pre></div>
+        <div class="agent"><h2>Agent BPsy</h2><pre id="bpsy"></pre></div>
+        <div class="agent"><h2>Agent JRed</h2><pre id="jred"></pre></div>
+        <div class="agent"><h2>Agent Synthesis</h2><pre id="synthesis"></pre></div>
 
-<div class="agent"><h2>Jung</h2><pre id="jung"></pre></div>
-<div class="agent"><h2>Dream</h2><pre id="dream"></pre></div>
-<div class="agent"><h2>Shadow</h2><pre id="shadow"></pre></div>
-<div class="agent"><h2>Myth</h2><pre id="myth"></pre></div>
-<div class="agent"><h2>Epistemic</h2><pre id="epistemic"></pre></div>
-<div class="agent"><h2>BPsy</h2><pre id="bpsy"></pre></div>
-<div class="agent"><h2>JRed</h2><pre id="jred"></pre></div>
-<div class="agent"><h2>Synthesis</h2><pre id="synthesis"></pre></div>
-
-<div class="agent final">
-<h2>Final Output</h2>
+        <div class="agent final">
+            <h2>Final Output</h2>
 <pre id="final"></pre>
-</div>
+        </div>
 
-</div>
+    </div>
 
-<script src="/static/app.js"></script>
-
-
+    <script src="/static/app.js"></script>
 
 </body>
 </html>

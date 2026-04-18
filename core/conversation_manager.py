@@ -10,6 +10,8 @@ class ConversationState:
 
         self.current_agent = "jung"
         self.agent_histories = {}
+        
+        self.conversation_started = False # Flag to track the start of the conversation
 
     # -----------------------------
     # ADD USER INPUT (SINGLE SOURCE)
