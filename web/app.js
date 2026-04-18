@@ -3,6 +3,9 @@
 
 console.log("app.js loaded")
 
+// Global memory store for agents
+window.agentMemory = {}
+
 // -------------------------------
 // INITIAL TRIGGER (Run Analysis)
 // -------------------------------
