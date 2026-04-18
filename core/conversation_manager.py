@@ -14,14 +14,6 @@ class ConversationState:
         
         self.current_agent = "jung" # track active agent
         self.agent_histories = {}
-        
-    """
-    def add_user_input(self, text):
-        self.history.append({"role": "user", "content": text})
-
-    def add_system_output(self, text):
-        self.history.append({"role": "assistant", "content": text})
-    """
     
     def add_user_input(self, text):
         self.history.append({"role": "client", "content": text})
@@ -49,3 +41,8 @@ class ConversationState:
             "role": "agent",
             "text": text
         })
+
+    def add_user_input(self, text):
+        if not self.history or self.history[-1]["text"] != text:
+            self.history.append({"role": "client", "text": text})
+

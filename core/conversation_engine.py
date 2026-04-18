@@ -111,39 +111,6 @@ def handle_turn(state, user_input):
             "content": "Unknown agent."
         }
     
-    """
-    # -----------------------------
-    # OTHER AGENTS (fallback mode)
-    # -----------------------------
-    else:
-        selected_agent = rule_based_selection(user_input)
-
-        if not selected_agent:
-            selected_agent = llm_based_selection(user_input)
-
-        print(f"🔀 Selected Agent: {selected_agent}")
-
-        if selected_agent == "shadow":
-            result = shadow_response(user_input)
-        elif selected_agent == "myth":
-            result = myth_response(user_input)
-        elif selected_agent == "epistemic":
-            result = epistemic_response(user_input)
-        elif selected_agent == "bpsy":
-            result = bpsy_response(user_input)
-        elif selected_agent == "jred":
-            result = jred_response(user_input)
-        else:
-            result = "I'm not sure which perspective applies. Could you clarify?"
-
-        output = {
-            "type": "response",
-            "agent": "jung",   # include agent identity in every response
-            "content": result,
-            "next_stage": "jung_followup"
-        }
-    """
-    
     # -----------------------------
     # UPDATE STATE
     # -----------------------------
