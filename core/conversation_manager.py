@@ -24,17 +24,17 @@ class ConversationState:
     """
     
     def add_user_input(self, text):
-    self.history.append({"role": "client", "content": text})
+        self.history.append({"role": "client", "content": text})
 
-    agent = self.current_agent
+        agent = self.current_agent
 
-    if agent not in self.agent_histories:
-        self.agent_histories[agent] = []
+        if agent not in self.agent_histories:
+            self.agent_histories[agent] = []
 
-    self.agent_histories[agent].append({
-        "role": "client",
-        "text": text
-    })
+        self.agent_histories[agent].append({
+            "role": "client",
+            "text": text
+        })
 
 
     def add_system_output(self, text):
