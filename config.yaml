@@ -1,0 +1,48 @@
+
+---
+
+# ⚙️ `config.yaml`
+
+```yaml
+app:
+  name: CGJI01
+  mode: development
+
+server:
+  host: 0.0.0.0
+  port: 8000
+
+agents:
+  default: jung
+  available:
+    - jung
+    - dream
+    - shadow
+    - myth
+    - epistemic
+    - bpsy
+    - jred
+
+rag:
+  enabled: true
+  base_path: rag/
+  top_k: 3
+
+web_search:
+  enabled: true
+  provider: tavily
+  max_results: 3
+
+llm:
+  provider: groq
+  model: llama-3.1-8b-instant
+  temperature: 0.7
+
+memory:
+  per_agent: true
+  store_history: true
+
+ui:
+  mode: interactive
+  conversation_start_label: Fire
+  conversation_continue_label: Fuel

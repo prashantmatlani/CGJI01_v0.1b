@@ -22,9 +22,7 @@ app = FastAPI()
 # THEN MOUNT STATIC
 app.mount("/static", StaticFiles(directory="web"), name="static")
 
-
 # sessions = {}
-
 
 # ---- CORS FIX ----
 app.add_middleware(
