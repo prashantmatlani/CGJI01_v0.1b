@@ -10,12 +10,17 @@
 
     <h1>CGJI01 — Multi-Agent Jungian Intelligence</h1>
 
+    <!-- 🔹 CHAT DISPLAY -->
+    <div id="chat"
+         style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    </div>
+
     <!-- 🔹 SINGLE INPUT (REPLACES BOTH BOXES) -->
     <p id="input_label">Enter query:</p>
 
-<textarea id="main_input"
-          placeholder="Let's talk"
-          style="width:100%; height:80px;"></textarea>
+    <textarea id="main_input"
+              placeholder="Let's talk"
+              style="width:100%; height:80px;"></textarea>
 
     <!-- 🔹 FIRE BUTTON (STARTS CONVERSATION) -->
     <button id="fire_btn" onclick="fire()">Fire</button>
@@ -26,10 +31,6 @@
             style="display:none;">
         End Session
     </button>
-
-    <!-- 🔹 CHAT DISPLAY -->
-    <div id="chat"
-         style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-top:10px;"></div>
 
     <hr>
 

@@ -17,10 +17,17 @@ window.agentMemory = {}
 //async function runAnalysis(){
 async function fire(){
 
-    const inputBox = document.getElementById("initial_input")
+    //const inputBox = document.getElementById("initial_input")
+    const inputBox = document.getElementById("main_input")
     const text = inputBox.value
 
     //console.log("🚀 Run Analysis:", text)
+
+    // safety check to prevent silent errrors if element isn't found
+    if (!inputBox) {
+        console.error("❌ main_input not found")
+        return
+    }
 
     if(!text) return
 

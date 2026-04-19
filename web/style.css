@@ -33,12 +33,14 @@ gap:20px;
 margin-top:30px;
 }
 
+/* Agent-box Styling - darktheme*/
 .agent{
 background:#222;
 padding:15px;
 border-radius:8px;
 }
 
+/* Final-box Styling - darktheme*/
 .final{
 grid-column:span 3;
 background:#333;
@@ -134,14 +136,13 @@ button {
     gap: 15px;
 }
 
-.agent {
-    border: 1px solid #ccc;
-    padding: 10px;
-    background: #fafafa;
+/* Premium Polish */
+#chat {
+    background-color: #020617;
+    border-radius: 8px;
 }
 
-/* Final output highlight */
-.final {
-    grid-column: span 3;
-    background: #f0f0f0;
+textarea:focus {
+    outline: none;
+    border: 1px solid #3b82f6;
 }
