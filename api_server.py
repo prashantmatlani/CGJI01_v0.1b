@@ -130,15 +130,15 @@ def chat(req: ChatRequest):
 
     print("\n🧾 RAW REQUEST BODY:", req)
 
-    # set flag to indicate the start of the conversation 
-    if not state.conversation_started:
-        state.conversation_started = True
-
     if session_id not in sessions:
         sessions[session_id] = ConversationState()
 
     state = sessions[session_id]
    
+    # set flag to indicate the start of the conversation 
+    if not state.conversation_started:
+        state.conversation_started = True
+
     # SET INITIAL QUERY ONLY FOR FIRST, INITIAL USER MESSAGE; IGNORE SYSTEM MESSAGES
     if not state.initial_query and not message.startswith("__agent__:"):
         state.initial_query = message
